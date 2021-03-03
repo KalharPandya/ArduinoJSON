@@ -51,11 +51,12 @@ String strSplit(String data, char separator, int index)
 }
 void createUnit(String token){
     String key = strSplit(token,':',0);
+    key.remove(0,1);
+    key.remove(key.length()-1,1);
     String value = strSplit(token,':',1);
     switch (knowTokenType(value))
     {
     case STRING:
-    
         value.remove(0,1);
         value.remove(value.length()-1,1);
         parsed.addUnit(key,value);

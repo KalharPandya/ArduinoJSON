@@ -36,7 +36,8 @@ class uni_data{
             return "none";
         }
     }
-    String getString(){
+    String getString(bool withEscape){
+        String esc = withEscape?"\\":"";
         switch (type)
         {
         case (DOUBLE):
@@ -46,7 +47,7 @@ class uni_data{
             return String(number_data);
             break;
         case (STRING):
-            return "\""+String(str_data)+"\"";
+            return esc+"\""+String(str_data)+esc+"\"";
             break;
         default:
             return "error";

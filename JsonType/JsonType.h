@@ -89,15 +89,16 @@ class json{
             }
         }
     }
-    String getString(){
+    String getString(bool withEscape = false){
         result = "{";
         for(int i = 0 ; i < index ; i ++){
-            result+=units[i]->getString();
+            result+=units[i]->getString(withEscape);
             if(i!=index-1){
                 result+=',';
             }
         }
         result+="}";
-        return result;
+        String esc = withEscape?"\"":"";
+        return esc+result+esc;
     }
 };

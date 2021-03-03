@@ -28,7 +28,8 @@ class unit{
         value->setData(d);
     }
 
-    String getString(){
-        return key+":"+value->getString();
+    String getString(bool withEscape){
+        String esc = withEscape?"\\":"";
+        return esc+"\"" + key+esc+"\""+":"+value->getString(withEscape);
     }
 };
