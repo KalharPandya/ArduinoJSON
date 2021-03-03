@@ -70,7 +70,7 @@ void createUnit(String token){
         parsed.addUnit(key,value);
     }
 }
-json JSONParse(String jsonStr){
+json parseJSON(String jsonStr){
     jsonStr.remove(0,1);
     jsonStr.remove(jsonStr.length()-1,1);
     // Serial.println(jsonStr);
