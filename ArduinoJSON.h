@@ -107,7 +107,7 @@ String findJSON(String raw, char start = '{', char finish='}')
     {
         if (raw[i] == start)
         {
-            while (raw[i] != finish)
+            while (raw[i-1] != finish)
             {
                 json += raw[i];
                 i++;
@@ -122,6 +122,8 @@ String findJSON(String raw, char start = '{', char finish='}')
 json parseJSON(String jsonStr)
 {
     jsonStr = findJSON(jsonStr);
+    
+        Serial.println(jsonStr);
     jsonStr.remove(0, 1);
     jsonStr.remove(jsonStr.length() - 1, 1);
     parsed.clear();
