@@ -15,7 +15,6 @@ public:
         invalidUnit.value->str_data = "";
         for (int i = 0; i < MAX_UNITS; i++)
         {
-
             units[i] = new unit();
         }
     }

@@ -52,32 +52,35 @@ double getDouble(String token)
     return token.toDouble();
 }
 
-String strSplit(String data,  char separator, int index)
+String strSplit(String data, char separator, int index)
 {
     // Serial.println("Splitting   "+data);
     int index_cnt = -1;
     data += separator;
     String token = "";
-    for(int i = 0 ; i < data.length(); i ++){
-        if(data[i] == separator){
-            index_cnt+=1;
-            if(index_cnt == index){
+    for (int i = 0; i < data.length(); i++)
+    {
+        if (data[i] == separator)
+        {
+            index_cnt += 1;
+            if (index_cnt == index)
+            {
                 return token;
             }
             token = "";
         }
         else
-            token+=data[i];
+            token += data[i];
     }
 }
 void createUnit(String token)
 {
     key = strSplit(token, ':', 0);
-    
+
     key.remove(0, 1);
     key.remove(key.length() - 1, 1);
     value = strSplit(token, ':', 1);
-    
+
     // Serial.println("Value = " + value);
     switch (knowTokenType(value))
     {
@@ -96,21 +99,41 @@ void createUnit(String token)
         parsed.addUnit(key, value);
     }
 }
+String findJSON(String raw, char start = '{', char finish='}')
+{
+    String json = "";
+
+    for (int i = 0; i < raw.length(); i++)
+    {
+        if (raw[i] == start)
+        {
+            while (raw[i] != finish)
+            {
+                json += raw[i];
+                i++;
+            }
+            break;
+            json += raw[i];
+            break;
+        }
+    }
+    return json;
+}
 json parseJSON(String jsonStr)
 {
+    jsonStr = findJSON(jsonStr);
     jsonStr.remove(0, 1);
     jsonStr.remove(jsonStr.length() - 1, 1);
-    // Serial.println(jsonStr);
     parsed.clear();
     int i = 0;
     String token;
     do
-    {   
+    {
         token = strSplit(jsonStr, ',', i);
-        if(token == "")
+        if (token == "")
             break;
         createUnit(token);
         i++;
-    }while (token != "");
+    } while (token != "");
     return parsed;
 }
