@@ -113,8 +113,6 @@ String findJSON(String raw, char start = '{', char finish='}')
                 i++;
             }
             break;
-            json += raw[i];
-            break;
         }
     }
     return json;
