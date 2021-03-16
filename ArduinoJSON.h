@@ -120,8 +120,6 @@ String findJSON(String raw, char start = '{', char finish='}')
 json parseJSON(String jsonStr)
 {
     jsonStr = findJSON(jsonStr);
-    
-        Serial.println(jsonStr);
     jsonStr.remove(0, 1);
     jsonStr.remove(jsonStr.length() - 1, 1);
     parsed.clear();
