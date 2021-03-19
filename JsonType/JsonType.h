@@ -1,5 +1,5 @@
 #include "./unit/unit.h"
-#define MAX_UNITS 10
+#define MAX_UNITS 25
 unit invalidUnit;
 class json
 {
@@ -20,18 +20,33 @@ public:
     }
     void addUnit(String key, String value)
     {
+        if (index >= MAX_UNITS)
+        {
+            Serial.println("JSON units Limit Reached");
+            return;
+        }
         units[index]->setKey(key);
         units[index]->setValue(value);
         index++;
     }
     void addUnit(String key, double value)
     {
+        if (index >= MAX_UNITS)
+        {
+            Serial.println("JSON units Limit Reached");
+            return;
+        }
         units[index]->setKey(key);
         units[index]->setValue(value);
         index++;
     }
     void addUnit(String key, long value)
     {
+        if (index >= MAX_UNITS)
+        {
+            Serial.println("JSON units Limit Reached");
+            return;
+        }
         units[index]->setKey(key);
         units[index]->setValue(value);
         index++;
