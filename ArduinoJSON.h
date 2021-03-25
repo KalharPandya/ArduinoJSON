@@ -19,32 +19,40 @@ int knowTokenType(String token)
     isString = true;
     for (int i = 0; i < token.length(); i++)
     {
-        if (!isDigit(token[i]))
-        {
+        if (!isDigit(token[i])){
+
             isNumber = false;
-            if (token[i] != '.')
+            if(token[i] == '-'&& i == 0){
+                isNumber = true;
+            }
+            else if (token[i] != '.')
             {
                 isDouble = false;
-                return STRING;
             }
         }
     }
     if (isNumber)
+    {
+        //Serial.println("Number");
         return NUMBER;
+    }
     if (isDouble)
+    {
+        //Serial.println("Double");
         return DOUBLE;
+    }
     if (isString)
+    {
+        //Serial.println("String");
         return STRING;
+    }
     return -1;
 }
 
 long getNumber(String token)
 {
-    result = 0;
-    for (int i = 0; i < token.length(); i++)
-    {
-        result = result * 10 + (token[i] - '0');
-    }
+    result = token.toInt();
+    
     return result;
 }
 double getDouble(String token)
@@ -99,7 +107,7 @@ void createUnit(String token)
         parsed.addUnit(key, value);
     }
 }
-String findJSON(String raw, char start = '{', char finish='}')
+String findJSON(String raw, char start = '{', char finish = '}')
 {
     String json = "";
 
@@ -107,7 +115,7 @@ String findJSON(String raw, char start = '{', char finish='}')
     {
         if (raw[i] == start)
         {
-            while (raw[i-1] != finish)
+            while (raw[i - 1] != finish)
             {
                 json += raw[i];
                 i++;
