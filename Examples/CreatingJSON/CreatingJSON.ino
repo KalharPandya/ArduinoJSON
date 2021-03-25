@@ -13,7 +13,7 @@ void setup() {
   Serial.println("Name : " + myObj.getValue("Name"));
 
   //Updates Existing Key
-  myObj.updateValue("Name", "Kalhar Pandya");
+  myObj.addUnit("Name", "Kalhar Pandya");
   Serial.println("Name Updated");
   Serial.println("Name : " + myObj.getValue("Name"));
   Serial.println();
