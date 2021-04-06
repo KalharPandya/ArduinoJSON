@@ -1,5 +1,5 @@
 #include "./unit/unit.h"
-#define MAX_UNITS 4
+#define MAX_UNITS 15//Decrease This for Arduino
 unit invalidUnit;
 class json
 {
