@@ -11,7 +11,7 @@ bool isString = true;
 long result = 0;
 String value;
 String key;
-
+json noJson;
 int knowTokenType(String token)
 {
     isNumber = true;
@@ -125,9 +125,23 @@ String findJSON(String raw, char start = '{', char finish = '}')
     }
     return json;
 }
+bool isJsonString(String jsonStr){
+
+    jsonStr = findJSON(jsonStr);
+    if (jsonStr.length() == 0)
+    {
+        return false;
+    }
+    return true;
+}
 json parseJSON(String jsonStr)
 {
     jsonStr = findJSON(jsonStr);
+    if(jsonStr.length() == 0){
+        noJson.clear();
+        noJson.addUnit("error", "No Json Found");
+        return noJson;
+    }
     jsonStr.remove(0, 1);
     jsonStr.remove(jsonStr.length() - 1, 1);
     parsed.clear();
