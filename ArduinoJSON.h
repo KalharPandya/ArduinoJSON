@@ -115,7 +115,7 @@ String findJSON(String raw, char start = '{', char finish = '}')
     {
         if (raw[i] == start)
         {
-            while (raw[i - 1] != finish)
+            while (raw[i - 1] != finish && i<raw.length())
             {
                 json += raw[i];
                 i++;
