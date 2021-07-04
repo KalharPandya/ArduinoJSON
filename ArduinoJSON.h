@@ -120,6 +120,9 @@ String findJSON(String raw, char start = '{', char finish = '}')
                 json += raw[i];
                 i++;
             }
+            if(i == raw.length()){
+                return "";
+            }
             break;
         }
     }
