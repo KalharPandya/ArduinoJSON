@@ -4,21 +4,44 @@
 
 class uni_data{
     public:
-    uint8_t type;
-    String str_data;
-    double double_data;
-    long number_data;
+    uint8_t type = -1;
+    String *str_data;
+    double *double_data;
+    long *number_data;
+    void clear_past(){
+        delete double_data;
+        delete number_data;
+        delete str_data;
+    }
+    void setType(int i){
+        type = i;
+    }
     void setData(String d){
-        this->str_data = d;
+        clear_past();
+        str_data = new String();
+        *this->str_data = d;
         type = STRING;
     }
     void setData(double d){
-        this->double_data = d;
+        clear_past();
+        double_data = new double();
+        *this->double_data = d;
         type = DOUBLE;
     }
     void setData(long d){
-        this->number_data = d;
+        clear_past();
+        number_data = new long();
+        *this->number_data = d;
         type = NUMBER;
+    }
+    double getDoubleValue(){
+        return *double_data;
+    }
+    String getStringValue(){
+        return *str_data;
+    }
+    long getNumberValue(){
+        return *number_data;
     }
     String getType(){
         switch (type)
@@ -41,16 +64,20 @@ class uni_data{
         switch (type)
         {
         case (DOUBLE):
-            return String(double_data);
+            return String(*double_data);
             break;
         case (NUMBER):
-            return String(number_data);
+            return String(*number_data);
             break;
         case (STRING):
-            return esc+"\""+String(str_data)+esc+"\"";
+            return esc+"\""+String(*str_data)+esc+"\"";
             break;
         default:
             return "error";
         }
+    }
+
+    ~uni_data(){
+        clear_past();
     }
 };

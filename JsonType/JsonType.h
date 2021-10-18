@@ -1,5 +1,5 @@
 #include "./unit/unit.h"
-#define MAX_UNITS 15//Decrease This for Arduino
+#define MAX_UNITS 1500//Decrease This for Arduino
 unit invalidUnit;
 class json
 {
@@ -10,13 +10,11 @@ public:
     json()
     {
         invalidUnit.setKey("Invalid");
-        invalidUnit.value->double_data = -1;
-        invalidUnit.value->number_data = -1;
-        invalidUnit.value->str_data = "";
-        for (int i = 0; i < MAX_UNITS; i++)
-        {
-            units[i] = new unit();
-        }
+        invalidUnit.value->setType(-1);
+        // for (int i = 0; i < MAX_UNITS; i++)
+        // {
+        //     units[i] = new unit();
+        // }
     }
     bool has(String key)
     {
@@ -41,6 +39,7 @@ public:
             Serial.println("JSON units Limit Reached");
             return;
         }
+        units[index] = new unit();
         units[index]->setKey(key);
         units[index]->setValue(value);
         index++;
@@ -57,6 +56,7 @@ public:
             Serial.println("JSON units Limit Reached");
             return;
         }
+        units[index] = new unit();
         units[index]->setKey(key);
         units[index]->setValue(value);
         index++;
@@ -73,6 +73,7 @@ public:
             Serial.println("JSON units Limit Reached");
             return;
         }
+        units[index] = new unit();
         units[index]->setKey(key);
         units[index]->setValue(value);
         index++;
@@ -99,21 +100,25 @@ public:
     String getValue(String key)
     {
         unit *found_unit = findUnit(key);
-        return found_unit->value->str_data;
+        return found_unit->value->getStringValue();
     }
     long getNumberValue(String key)
     {
         unit *found_unit = findUnit(key);
-        return found_unit->value->number_data;
+        return found_unit->value->getNumberValue();
     }
     double getDoubleValue(String key)
     {
         unit *found_unit = findUnit(key);
-        return found_unit->value->double_data;
+        return found_unit->value->getDoubleValue();
     }
     void clear()
     {
-        index = 0;
+
+        while(index > 0){
+            delete units[index-1];
+            index -= 1;
+        }
     }
     void updateValue(String key, String Value)
     {
@@ -143,13 +148,23 @@ public:
     {
         for (int i = 0; i < index; i++)
         {
+            Serial.printf("i = %d\n",i);
+
             if (units[i]->getKey() == key)
             {
+                
+                delete units[i]; 
                 for (int j = i; j < index - 1; j++)
                 {
+                    Serial.printf("j = %d\n",j);
                     units[j] = units[j + 1];
+                    Serial.printf("j afrter = %d\n",j);
+
                 }
-                index -= 1;
+                 
+                    Serial.printf("j afrter deleting = %d\n",index - 1 );
+
+                index -= 1;  
                 break;
             }
         }
@@ -159,7 +174,10 @@ public:
         result = "{";
         for (int i = 0; i < index; i++)
         {
+            Serial.printf("Accessing Index %d\n", i);
             result += units[i]->getString(withEscape);
+            
+            Serial.printf("Accessing Index %d\n", i);
             if (i != index - 1)
             {
                 result += ',';
@@ -168,5 +186,10 @@ public:
         result += "}";
         String esc = withEscape ? "\"" : "";
         return esc + result + esc;
+    }
+    ~json(){
+        for(int i = 0 ; i < index ; i ++){
+            delete units[i];
+        }
     }
 };

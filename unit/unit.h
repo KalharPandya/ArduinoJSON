@@ -33,4 +33,8 @@ class unit{
         String esc = withEscape?"\\":"";
         return esc+"\"" + key+esc+"\""+":"+value->getString(withEscape);
     }
+    
+    ~unit(){
+        delete value;
+    }
 };
